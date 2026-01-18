@@ -1,4 +1,5 @@
 import styled, { keyframes } from 'styled-components'
+import { Link } from 'react-router-dom'
 import Projects from './Projects.jsx'
 import Skills from './Skills.jsx'
 import Contact from './Contact.jsx'
@@ -126,7 +127,9 @@ export default function About() {
             <Reveal delayMs={320} threshold={0.15}>
               <Contacts>
                 <A href="https://github.com/rodrigoalbuq" target="_blank" rel="noreferrer">GitHub</A>
-                <A href="/contato">Email</A>
+                <Link to="/contato" style={{ textDecoration: 'none', color: 'inherit', transition: 'color 0.2s ease' }}>
+                  <A as="span">Email</A>
+                </Link>
                 <A href="https://wa.me/5581994236672" target="_blank" rel="noreferrer">WhatsApp </A>
               </Contacts>
             </Reveal>
