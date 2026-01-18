@@ -88,6 +88,11 @@ VITE_FALLBACK_RECIPIENT=seu_email@exemplo.com
 - Para evitar “flash” de tema, o app inicializa com o valor do `localStorage` ou `prefers-color-scheme` antes da montagem.
 - O conteúdo da About revela conforme o scroll usando `IntersectionObserver`.
 
+## Qualidade de Código
+
+- ESLint (flat config v9): configuração em [eslint.config.js](eslint.config.js)
+- Prettier: configuração em [.prettierrc](.prettierrc)
+
 ## Aprendizados
 
 Tecnologias que pûde praticar desenvolvendo esse projeto do meu portifólio:
@@ -101,7 +106,4 @@ Tecnologias que pûde praticar desenvolvendo esse projeto do meu portifólio:
 - UX/Performance: Vite para desenvolvimento rápido, animações sutis e `lazy()` para carregar componentes sob demanda (ver uso em [src/sections/Contact.jsx](src/sections/Contact.jsx)).
 - Conceitos: reforço de princípios como Responsive Design, Mobile First, APIs REST, AJAX e PWA (documentados em Habilidades).
 
-## Qualidade de Código
 
-- ESLint (flat config v9): configuração em [eslint.config.js](eslint.config.js)
-- Prettier: configuração em [.prettierrc](.prettierrc)
