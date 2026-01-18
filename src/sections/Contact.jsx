@@ -137,9 +137,13 @@ export default function Contact() {
       setMessage('')
     } catch (_err) {
       if (_err && _err.message === 'SEND_FAILED' && _err.data) {
-        setErrorMsg(`Falha ao enviar: ${JSON.stringify(_err.data)}`)
+        if (_err.data.message && _err.data.message.includes('Activation')) {
+          setErrorMsg('Este formulário precisa ser ativado. Verifique seu e-mail e clique no link de ativação enviado pelo FormSubmit.');
+        } else {
+          setErrorMsg(`Falha ao enviar: ${_err.data.message || JSON.stringify(_err.data)}`);
+        }
       } else {
-        setErrorMsg('Falha ao enviar. Tente novamente em instantes.')
+        setErrorMsg('Falha ao enviar. Tente novamente em instantes.');
       }
     } finally {
       setSending(false)
