@@ -106,4 +106,13 @@ Tecnologias que pûde praticar desenvolvendo esse projeto do meu portifólio:
 - UX/Performance: Vite para desenvolvimento rápido, animações sutis e `lazy()` para carregar componentes sob demanda (ver uso em [src/sections/Contact.jsx](src/sections/Contact.jsx)).
 - Conceitos: reforço de princípios como Responsive Design, Mobile First, APIs REST, AJAX e PWA (documentados em Habilidades).
 
+## 🤝 Contribuições
+
+Contribuições são bem-vindas! Agradeço desde já. Sinta-se à vontade para:
+
+1. **Fork** o projeto
+2. **Crie** uma feature branch
+3. **Faça commit** das mudanças
+4. **Abra** um Pull Request
+
 
