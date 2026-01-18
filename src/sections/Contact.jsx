@@ -136,7 +136,11 @@ export default function Contact() {
       setEmail('')
       setMessage('')
     } catch (_err) {
-      setErrorMsg('Falha ao enviar. Tente novamente em instantes.')
+      if (_err && _err.message === 'SEND_FAILED' && _err.data) {
+        setErrorMsg(`Falha ao enviar: ${JSON.stringify(_err.data)}`)
+      } else {
+        setErrorMsg('Falha ao enviar. Tente novamente em instantes.')
+      }
     } finally {
       setSending(false)
     }
