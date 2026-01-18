@@ -271,8 +271,22 @@ export default function Header() {
     <Wrapper>
       <Container>
         <BrandButton type="button" onClick={goHomeTop} aria-label="Ir ao topo da About">
-          <Avatar src="/Rodrigo_portifolio.jpg" alt="Rodrigo Albuquerque" loading="eager" decoding="async" fetchPriority="high" />
-          <span>Rodrigo Albuquerque</span>
+          {/* Avatar só aparece no mobile se o menu não estiver aberto */}
+          <span style={{display: 'flex', alignItems: 'center', gap: 12}}>
+            <span style={{display: 'inline-block'}}>
+              <Avatar
+                src="/Rodrigo_portifolio.jpg"
+                alt="Rodrigo Albuquerque"
+                loading="eager"
+                decoding="async"
+                fetchPriority="high"
+                style={{
+                  display: (typeof window !== 'undefined' && window.innerWidth <= 768 && open) ? 'none' : undefined
+                }}
+              />
+            </span>
+            Rodrigo Albuquerque
+          </span>
         </BrandButton>
         <Nav>
           <Link to="/" data-spy-active={activeHash === '#sobre'}>Sobre</Link>
