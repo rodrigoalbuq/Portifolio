@@ -19,7 +19,9 @@ export async function sendEmail({ name, email, message }) {
     // Fallback sem configuração: FormSubmit (envia para o email do portfólio)
     const recipient = import.meta.env.VITE_FALLBACK_RECIPIENT || 'rodrigoalvalbq@gmail.com'
     try {
-        const res = await fetch(`https://formsubmit.co/ajax/${encodeURIComponent(recipient)}`, {
+        const endpoint = `https://formsubmit.co/ajax/${encodeURIComponent(recipient)}`;
+        console.log('Enviando para:', endpoint);
+        const res = await fetch(endpoint, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -38,10 +40,12 @@ export async function sendEmail({ name, email, message }) {
 
         const data = await res.json().catch(() => ({}))
         if (!res.ok || (data && data.success !== 'true')) {
+            console.error('Erro ao enviar:', { status: res.status, data })
             throw new Error('SEND_FAILED')
         }
         return data
     } catch (_err) {
+        console.error('Erro no envio:', _err)
         throw new Error('SEND_FAILED')
     }
 }
