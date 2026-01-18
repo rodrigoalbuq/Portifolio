@@ -4,7 +4,7 @@ Portfólio moderno e responsivo em React + Vite, com rotas, tema claro/escuro, a
 
 ## 🖼️ Captura de Tela
 
-![Portifolio em execução](Screenshot\Portifolio_home.png)
+![Portifolio em execução](Screenshot/Portifolio_home.png)
 
 ## Visão Geral
 
