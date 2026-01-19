@@ -1,3 +1,7 @@
+// Parágrafo informativo com cor do tema (muted)
+const InfoText = styled.p`
+  color: ${({ theme }) => theme.muted};
+`;
 import styled from 'styled-components'
 import { useState, useEffect, Suspense, lazy } from 'react'
 import { sendEmail } from '../services/email.js'
@@ -153,7 +157,7 @@ export default function Contact() {
   return (
     <Section id="contato">
       <Title>Contato</Title>
-      <p>Fique à vontade para entrar em contato comigo através do formulário abaixo.</p>
+      <InfoText>Fique à vontade para entrar em contato comigo através do formulário abaixo.</InfoText>
       <Grid>
         <Card>
           <form onSubmit={handleSubmit} autoComplete="off">

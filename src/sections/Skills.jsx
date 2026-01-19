@@ -1,3 +1,7 @@
+// Parágrafo informativo com cor do tema (muted)
+const InfoText = styled.p`
+  color: ${({ theme }) => theme.muted};
+`;
 // Importa styled-components para estilização e useState para controle de seleção
 import styled from 'styled-components'
 import { useState } from 'react'
@@ -105,7 +109,7 @@ export default function Skills() {
     <Section className="fade-in">
       <Title>Habilidades</Title>
       {/* Descrição introdutória */}
-      <p>A seguir estão algumas das minhas principais habilidades técnicas. </p>
+      <InfoText>A seguir estão algumas das minhas principais habilidades técnicas. </InfoText>
       {/* Renderiza cada categoria de habilidades */}
       {categories.map((cat) => (
         <div key={cat.name}>
