@@ -20,8 +20,10 @@ const Main = styled.main`
   padding-bottom: 24px;
 `
 
+// Componente principal da aplicação
 export default function App() {
   const location = useLocation()
+  // Garante que a rolagem sempre volta ao topo ao navegar
   useEffect(() => {
     if ('scrollRestoration' in window.history) {
       window.history.scrollRestoration = 'manual'
@@ -33,8 +35,10 @@ export default function App() {
   }, [location.pathname])
   return (
     <Layout>
+      {/* Cabeçalho fixo com navegação e tema */}
       <Header />
       <Main>
+        {/* Rotas SPA para cada seção */}
         <Routes>
           <Route path="/" element={<About />} />
           <Route path="/projetos" element={<Projects />} />
@@ -42,6 +46,7 @@ export default function App() {
           <Route path="/contato" element={<Contact />} />
         </Routes>
       </Main>
+      {/* Rodapé com links e informações */}
       <Footer />
     </Layout>
   )

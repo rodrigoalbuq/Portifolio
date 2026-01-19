@@ -10,7 +10,7 @@ const Wrap = styled.div`
   opacity: 0;
   transform: translateY(8px);
   will-change: opacity, transform;
-  &[data-visible="true"] {
+  &[data-visible='true'] {
     opacity: 1;
     transform: none;
     animation: ${revealUp} 360ms ease both;
@@ -29,10 +29,13 @@ export default function Reveal({ children, delayMs = 0, once = true, threshold =
     const onVisible = () => setVisible(true)
 
     if (typeof IntersectionObserver !== 'undefined') {
-      const obs = new IntersectionObserver((entries) => {
-        const e = entries[0]
-        if (e && e.isIntersecting) onVisible()
-      }, { threshold })
+      const obs = new IntersectionObserver(
+        (entries) => {
+          const e = entries[0]
+          if (e && e.isIntersecting) onVisible()
+        },
+        { threshold }
+      )
       obs.observe(el)
       return () => obs.disconnect()
     } else {

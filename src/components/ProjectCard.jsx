@@ -1,24 +1,37 @@
 import styled from 'styled-components'
 
 const Card = styled.article`
-  background: ${({ theme }) => theme.surface};
-  border: 1px solid ${({ theme }) => theme.border};
-  border-radius: 12px;
+  background: ${({ theme }) => theme.surface}CC;
+  border: 1.5px solid ${({ theme }) => theme.border};
+  border-radius: clamp(10px, 2vw, 18px);
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-  &:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.15); }
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    background 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(12px) saturate(1.12);
+  -webkit-backdrop-filter: blur(12px) saturate(1.12);
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 8px 28px rgba(0, 0, 0, 0.18),
+      0 0 0 2px ${({ theme }) => theme.accent}33,
+      0 4px 32px 0 ${({ theme }) => theme.accent}22;
+    background: ${({ theme }) => theme.surface}F2;
+  }
 `
 
 const Cover = styled.img`
   width: 100%;
-  height: 180px;
+  height: clamp(120px, 24vw, 200px);
   object-fit: cover;
 `
 
 const Body = styled.div`
-  padding: 16px;
+  padding: clamp(12px, 4vw, 28px) clamp(10px, 3vw, 24px) clamp(10px, 3vw, 20px)
+    clamp(10px, 3vw, 24px);
   color: ${({ theme }) => theme.text};
   display: flex;
   flex-direction: column;
@@ -26,12 +39,12 @@ const Body = styled.div`
 `
 
 const Title = styled.h3`
-  margin: 0 0 8px 0;
-  font-size: 1.125rem;
+  margin: 0 0 clamp(6px, 1vw, 14px) 0;
+  font-size: clamp(1.05rem, 2vw, 1.25rem);
 `
 
 const Desc = styled.p`
-  margin: 0 0 12px 0;
+  margin: 0 0 clamp(8px, 1vw, 16px) 0;
   color: ${({ theme }) => theme.muted};
   line-height: 1.6;
 `
@@ -48,9 +61,9 @@ const Tags = styled.ul`
 const Tag = styled.li`
   background: ${({ theme }) => theme.navActiveBg};
   color: ${({ theme }) => theme.muted};
-  padding: 6px 10px;
+  padding: clamp(4px, 0.7vw, 8px) clamp(8px, 2vw, 16px);
   border-radius: 999px;
-  font-size: 0.875rem;
+  font-size: clamp(0.82rem, 1.5vw, 1rem);
 `
 
 const Actions = styled.div`
@@ -66,8 +79,13 @@ const A = styled.a`
   padding: 8px 12px;
   border-radius: 8px;
   font-weight: 600;
-  transition: background 0.2s ease, transform 0.1s ease;
-  &:hover { background: ${({ theme }) => theme.accentHover}; transform: translateY(-1px); }
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease;
+  &:hover {
+    background: ${({ theme }) => theme.accentHover};
+    transform: translateY(-1px);
+  }
 `
 
 export default function ProjectCard({ project }) {
@@ -83,8 +101,12 @@ export default function ProjectCard({ project }) {
           ))}
         </Tags>
         <Actions>
-          <A href={project.demo} target="_blank" rel="noreferrer">Demo</A>
-          <A href={project.repo} target="_blank" rel="noreferrer">Código</A>
+          <A href={project.demo} target="_blank" rel="noreferrer">
+            Demo
+          </A>
+          <A href={project.repo} target="_blank" rel="noreferrer">
+            Código
+          </A>
         </Actions>
       </Body>
     </Card>

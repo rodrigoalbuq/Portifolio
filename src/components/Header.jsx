@@ -1,3 +1,4 @@
+// Cabeçalho principal do site, com navegação, tema e menu mobile
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import styled, { keyframes } from 'styled-components'
 import ThemeToggle from './ThemeToggle.jsx'
@@ -10,7 +11,7 @@ const Wrapper = styled.header`
   background: ${({ theme }) => theme.navBg};
   border-bottom: 1px solid ${({ theme }) => theme.border};
   backdrop-filter: none;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.06);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.06);
 `
 
 const Container = styled.div`
@@ -26,8 +27,14 @@ const Brand = styled.div`
   display: flex;
   align-items: center;
   gap: 12px;
-  color: ${({ theme }) => theme.brand};
+  color: ${({ theme }) => theme.text};
   font-weight: 700;
+  background: none;
+  border: none;
+  & span,
+  & {
+    color: ${({ theme }) => theme.text};
+  }
 `
 
 const BrandButton = styled.button`
@@ -47,10 +54,13 @@ const Avatar = styled.img`
   height: 40px;
   border-radius: 50%;
   object-fit: cover;
-  border: none;
+  border: none !important;
+  box-shadow: none !important;
+  background: transparent !important;
   filter: saturate(1.06) contrast(1.04);
   backface-visibility: hidden;
   transform: translateZ(0);
+  /* Avatar totalmente transparente, sem sobreposição visual */
 `
 
 const Nav = styled.nav`
@@ -68,9 +78,14 @@ const Link = styled(NavLink)`
   padding: 8px 12px;
   border-radius: 8px;
   position: relative;
-  transition: background 0.2s ease, color 0.2s ease;
-  &.active { background: ${({ theme }) => theme.navActiveBg}; color: ${({ theme }) => theme.text}; }
-   /* Apenas animação do sublinhado no hover */
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+  &.active {
+    background: ${({ theme }) => theme.navActiveBg};
+    color: ${({ theme }) => theme.text};
+  }
+  /* Apenas animação do sublinhado no hover */
   &::after {
     content: '';
     position: absolute;
@@ -87,7 +102,9 @@ const Link = styled(NavLink)`
   &:hover::after,
   &:focus-visible::after,
   &:active::after,
-  &[data-spy-active="true"]::after { transform: scaleX(1); }
+  &[data-spy-active='true']::after {
+    transform: scaleX(1);
+  }
 `
 
 // Links com maior contraste para o drawer mobile
@@ -95,7 +112,7 @@ const MobileLink = styled(NavLink)`
   color: ${({ theme }) => theme.text};
   text-decoration: none;
   font-weight: 600;
-  padding: 16px 14px;
+  padding: 10px 10px;
   border-radius: 0;
   display: block;
   opacity: 1;
@@ -105,15 +122,20 @@ const MobileLink = styled(NavLink)`
   line-height: 1.2;
   box-shadow: none;
   position: relative;
-  transition: background 0.2s ease, color 0.2s ease;
-  &.active { background: transparent; color: ${({ theme }) => theme.text}; }
-   /* Apenas animação do sublinhado no hover */
+  transition:
+    background 0.2s ease,
+    color 0.2s ease;
+  &.active {
+    background: transparent;
+    color: ${({ theme }) => theme.text};
+  }
+  /* Animação do sublinhado: hover, foco, ativo, scroll spy */
   &::after {
     content: '';
     position: absolute;
-    left: 12px;
-    right: 12px;
-    bottom: 6px;
+    left: 4px;
+    right: 4px;
+    bottom: 4px;
     height: 2px;
     background: ${({ theme }) => theme.text};
     border-radius: 2px;
@@ -124,7 +146,10 @@ const MobileLink = styled(NavLink)`
   &:hover::after,
   &:focus-visible::after,
   &:active::after,
-  &[data-spy-active="true"]::after { transform: scaleX(1); }
+  &[data-spy-active='true']::after,
+  &.active::after {
+    transform: scaleX(1);
+  }
 `
 
 const MobileList = styled.nav`
@@ -146,8 +171,12 @@ const MenuButton = styled.button`
   align-items: center;
   justify-content: center;
   gap: 8px;
-  transition: background 0.2s ease, border-color 0.2s ease;
-  &:hover { background: ${({ theme }) => theme.navHoverBg}; }
+  transition:
+    background 0.2s ease,
+    border-color 0.2s ease;
+  &:hover {
+    background: ${({ theme }) => theme.navHoverBg};
+  }
 `
 
 const Hamburger = styled.span`
@@ -155,7 +184,9 @@ const Hamburger = styled.span`
   height: 14px;
   position: relative;
   display: inline-block;
-  &::before, &::after, i {
+  &::before,
+  &::after,
+  i {
     content: '';
     position: absolute;
     left: 0;
@@ -163,37 +194,57 @@ const Hamburger = styled.span`
     height: 2px;
     background: ${({ theme }) => theme.text};
     border-radius: 2px;
-    transition: transform 0.2s ease, opacity 0.2s ease;
+    transition:
+      transform 0.2s ease,
+      opacity 0.2s ease;
   }
-  &::before { top: 0; }
-  i { top: 6px; }
-  &::after { top: 12px; }
+  &::before {
+    top: 0;
+  }
+  i {
+    top: 6px;
+  }
+  &::after {
+    top: 12px;
+  }
 
-  &.open::before { transform: translateY(6px) rotate(45deg); }
-  &.open i { opacity: 0; }
-  &.open::after { transform: translateY(-6px) rotate(-45deg); }
+  &.open::before {
+    transform: translateY(6px) rotate(45deg);
+  }
+  &.open i {
+    opacity: 0;
+  }
+  &.open::after {
+    transform: translateY(-6px) rotate(-45deg);
+  }
 `
 
 const slideInRight = keyframes`
-  from { transform: translateX(16px); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
+  from { transform: translateX(100%) scaleY(0.5); opacity: 0; }
+  to { transform: translateX(0) scaleY(1); opacity: 1; }
 `
 
 const MobileNav = styled.aside`
   position: fixed;
   top: 0;
-  bottom: 0;
   right: 0;
   width: min(85vw, 360px);
+  height: 50vh;
   background: ${({ theme }) => theme.navBg};
   border-left: 1px solid ${({ theme }) => theme.border};
+  border-bottom: 1px solid ${({ theme }) => theme.border};
   padding: 16px;
-  box-shadow: none;
-  animation: ${slideInRight} 280ms ease both;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  animation: ${slideInRight} 320ms cubic-bezier(0.4, 0, 0.2, 1) both;
   z-index: 1001;
   color: ${({ theme }) => theme.text};
   opacity: 1;
-  backdrop-filter: none;
+  backdrop-filter: blur(2px);
+  border-top-left-radius: 18px;
+  border-bottom-left-radius: 18px;
+  @media (max-width: 400px) {
+    width: 100vw;
+  }
 `
 
 const Overlay = styled.div`
@@ -207,10 +258,15 @@ const Overlay = styled.div`
 `
 
 export default function Header() {
+  // Estado do menu mobile aberto/fechado
   const [open, setOpen] = useState(false)
+  // Referência para o painel do menu mobile
   const navRef = useRef(null)
+  // Localização atual da rota
   const location = useLocation()
+  // Navegação programática
   const navigate = useNavigate()
+  // Hash da seção ativa (scroll spy)
   const [activeHash, setActiveHash] = useState('')
 
   // Fecha o menu ao clicar fora do painel, sem bloquear rolagem da página
@@ -233,10 +289,9 @@ export default function Header() {
       setActiveHash('')
       return
     }
+    // IDs das seções para scroll spy
     const ids = ['sobre', 'projetos', 'habilidades', 'contato']
-    const els = ids
-      .map((id) => document.getElementById(id))
-      .filter(Boolean)
+    const els = ids.map((id) => document.getElementById(id)).filter(Boolean)
     if (els.length === 0) return
     const observer = new IntersectionObserver(
       (entries) => {
@@ -251,9 +306,12 @@ export default function Header() {
     return () => observer.disconnect()
   }, [location.pathname])
 
+  // Fecha o menu mobile
   const close = () => setOpen(false)
+  // Alterna o menu mobile
   const toggle = () => setOpen((v) => !v)
 
+  // Vai para o topo da página About
   const goHomeTop = () => {
     if (location.pathname === '/') {
       const el = document.getElementById('sobre')
@@ -270,10 +328,11 @@ export default function Header() {
   return (
     <Wrapper>
       <Container>
+        {/* Botão da marca/voltar ao topo */}
         <BrandButton type="button" onClick={goHomeTop} aria-label="Ir ao topo da About">
           {/* Avatar só aparece no mobile se o menu não estiver aberto */}
-          <span style={{display: 'flex', alignItems: 'center', gap: 12}}>
-            <span style={{display: 'inline-block'}}>
+          <span style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+            <span style={{ display: 'inline-block' }}>
               <Avatar
                 src="/Rodrigo_portifolio.jpg"
                 alt="Rodrigo Albuquerque"
@@ -281,40 +340,96 @@ export default function Header() {
                 decoding="async"
                 fetchPriority="high"
                 style={{
-                  display: (typeof window !== 'undefined' && window.innerWidth <= 768 && open) ? 'none' : undefined
+                  display:
+                    typeof window !== 'undefined' && window.innerWidth <= 768 && open
+                      ? 'none'
+                      : undefined,
                 }}
               />
             </span>
             Rodrigo Albuquerque
           </span>
         </BrandButton>
+        {/* Navegação desktop */}
         <Nav>
-          <Link to="/" data-spy-active={activeHash === '#sobre'}>Sobre</Link>
-          <Link to="/projetos" data-spy-active={activeHash === '#projetos'}>Projetos</Link>
-          <Link to="/habilidades" data-spy-active={activeHash === '#habilidades'}>Habilidades</Link>
-          <Link to="/contato" data-spy-active={activeHash === '#contato'}>Contato</Link>
+          <Link to="/" data-spy-active={activeHash === '#sobre'}>
+            Sobre
+          </Link>
+          <Link to="/projetos" data-spy-active={activeHash === '#projetos'}>
+            Projetos
+          </Link>
+          <Link to="/habilidades" data-spy-active={activeHash === '#habilidades'}>
+            Habilidades
+          </Link>
+          <Link to="/contato" data-spy-active={activeHash === '#contato'}>
+            Contato
+          </Link>
           <ThemeToggle />
         </Nav>
-        <MenuButton aria-label={open ? 'Fechar menu' : 'Abrir menu'} aria-expanded={open} aria-controls="mobile-menu" onClick={toggle}>
-          <Hamburger className={open ? 'open' : ''}><i /></Hamburger>
+        {/* Botão do menu mobile */}
+        <MenuButton
+          aria-label={open ? 'Fechar menu' : 'Abrir menu'}
+          aria-expanded={open}
+          aria-controls="mobile-menu"
+          onClick={toggle}
+        >
+          <Hamburger className={open ? 'open' : ''}>
+            <i />
+          </Hamburger>
         </MenuButton>
       </Container>
+      {/* Menu mobile (drawer) */}
       {open && (
         <>
           <Overlay role="presentation" onClick={() => setOpen(false)} />
-          <MobileNav ref={navRef} id="mobile-menu" role="dialog" aria-modal="true" aria-label="Menu">
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 16 }}>
+          <MobileNav
+            ref={navRef}
+            id="mobile-menu"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Menu"
+          >
+            <div
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                marginBottom: 16,
+              }}
+            >
               <Brand>
-                <Avatar src="/Rodrigo_portifolio.jpg" alt="Rodrigo Albuquerque" loading="eager" decoding="async" fetchPriority="high" />
+                <Avatar
+                  src="/Rodrigo_portifolio.jpg"
+                  alt="Rodrigo Albuquerque"
+                  loading="eager"
+                  decoding="async"
+                  fetchPriority="high"
+                />
                 <span>Menu</span>
               </Brand>
               <ThemeToggle />
             </div>
             <MobileList>
-              <MobileLink to="/" data-spy-active={activeHash === '#sobre'} onClick={close}>Sobre</MobileLink>
-              <MobileLink to="/projetos" data-spy-active={activeHash === '#projetos'} onClick={close}>Projetos</MobileLink>
-              <MobileLink to="/habilidades" data-spy-active={activeHash === '#habilidades'} onClick={close}>Habilidades</MobileLink>
-              <MobileLink to="/contato" data-spy-active={activeHash === '#contato'} onClick={close}>Contato</MobileLink>
+              <MobileLink to="/" data-spy-active={activeHash === '#sobre'} onClick={close}>
+                Sobre
+              </MobileLink>
+              <MobileLink
+                to="/projetos"
+                data-spy-active={activeHash === '#projetos'}
+                onClick={close}
+              >
+                Projetos
+              </MobileLink>
+              <MobileLink
+                to="/habilidades"
+                data-spy-active={activeHash === '#habilidades'}
+                onClick={close}
+              >
+                Habilidades
+              </MobileLink>
+              <MobileLink to="/contato" data-spy-active={activeHash === '#contato'} onClick={close}>
+                Contato
+              </MobileLink>
             </MobileList>
           </MobileNav>
         </>

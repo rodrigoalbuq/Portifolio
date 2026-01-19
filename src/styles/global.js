@@ -32,6 +32,7 @@ const GlobalStyle = createGlobalStyle`
   /* Acessibilidade: foco visível padrão */
   :focus-visible { outline: 2px solid ${({ theme }) => theme.accent}; outline-offset: 2px; border-radius: 6px; }
 
+
   /* Utilitário: animação sutil de entrada */
   .fade-in {
     animation: ${fadeIn} 320ms ease both;

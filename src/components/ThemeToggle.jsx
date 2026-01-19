@@ -5,17 +5,23 @@ import { useThemeToggle } from '../styles/theme.jsx'
 const Button = styled.button`
   position: relative;
   overflow: hidden;
-  border: 1px solid ${({ theme }) => theme.border};
+  border: none;
   background: ${({ theme }) => theme.surface};
   color: ${({ theme }) => theme.text};
   padding: 8px;
   border-radius: 10px;
+
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition: background 0.2s ease, color 0.2s ease, border-color 0.2s ease;
-  &:hover { background: ${({ theme }) => theme.navHoverBg}; }
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    border-color 0.2s ease;
+  &:hover {
+    background: ${({ theme }) => theme.navHoverBg};
+  }
 `
 
 const spinScale = keyframes`
@@ -29,8 +35,14 @@ const IconWrap = styled.span`
   height: 22px;
   display: inline-flex;
   color: ${({ theme }) => theme.icon};
-  &.animate svg { animation: ${spinScale} 360ms ease forwards; }
-  svg { width: 100%; height: 100%; display: block; }
+  &.animate svg {
+    animation: ${spinScale} 360ms ease forwards;
+  }
+  svg {
+    width: 100%;
+    height: 100%;
+    display: block;
+  }
 `
 
 const ripple = keyframes`
@@ -71,10 +83,7 @@ function SunIcon() {
 function MoonIcon() {
   return (
     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z"
-        fill="currentColor"
-      />
+      <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79Z" fill="currentColor" />
     </svg>
   )
 }

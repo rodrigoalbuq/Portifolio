@@ -6,39 +6,39 @@ const ThemeContext = createContext({ themeName: 'dark', toggleTheme: () => {} })
 const themes = {
   dark: {
     bg: '#0a0f1a',
-    text: '#e2e8f0',
-    surface: '#0b1220',
-    border: 'rgba(255,255,255,0.08)',
-    navBg: '#0f172a',
+    text: '#f1f5fa',
+    surface: '#101624',
+    border: 'rgba(255,255,255,0.12)',
+    navBg: '#101624',
     navActiveBg: '#1e293b',
-    navHoverBg: '#0b1220',
-    muted: '#94a3b8',
-    brand: '#e2e8f0',
-    accent: '#22d3ee',
-    accentHover: '#0ea5b7',
-    link: '#22d3ee',
-    icon: '#e2e8f0',
+    navHoverBg: '#151b2c',
+    muted: '#b6c2d1',
+    brand: '#f1f5fa',
+    accent: '#06b6d4',
+    accentHover: '#0891b2',
+    link: '#38bdf8',
+    icon: '#f1f5fa',
     success: '#22c55e',
     error: '#ef4444',
-    valid: '#22d3ee',
+    valid: '#38bdf8',
   },
   light: {
     bg: '#f8fafc',
-    text: '#0f172a',
+    text: '#0a192f',
     surface: '#ffffff',
-    border: 'rgba(0,0,0,0.08)',
+    border: 'rgba(0,0,0,0.10)',
     navBg: '#ffffff',
     navActiveBg: '#e2e8f0',
     navHoverBg: '#f1f5f9',
-    muted: '#334155',
-    brand: '#0f172a',
-    accent: '#0ea5b7',
-    accentHover: '#0891a2',
-    link: '#0284c7',
-    icon: '#0ea5b7',
-    success: '#22c55e',
-    error: '#ef4444',
-    valid: '#334155',
+    muted: '#475569',
+    brand: '#0a192f',
+    accent: '#0284c7',
+    accentHover: '#0369a1',
+    link: '#0e7490',
+    icon: '#0284c7',
+    success: '#16a34a',
+    error: '#dc2626',
+    valid: '#0e7490',
   },
 }
 
@@ -47,10 +47,16 @@ export function ThemeProviderWithToggle({ children }) {
     try {
       const stored = localStorage.getItem('theme')
       if (stored === 'light' || stored === 'dark') return stored
-      if (typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      if (
+        typeof window !== 'undefined' &&
+        window.matchMedia &&
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+      ) {
         return 'dark'
       }
-    } catch { return 'dark' }
+    } catch {
+      return 'dark'
+    }
     return 'dark'
   }
 

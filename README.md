@@ -95,7 +95,7 @@ VITE_FALLBACK_RECIPIENT=seu_email@exemplo.com
 
 ## Aprendizados
 
-Tecnologias que pûde praticar desenvolvendo esse projeto do meu portifólio:
+Tecnologias que pratiquei durante o desenvolvimento deste projeto do meu portfólio:
 
 - React Router: configuração de rotas e navegação SPA; uso de `Link` em componentes (ver [src/components/Footer.jsx](src/components/Footer.jsx)).
 - Theming com Styled Components: alternância claro/escuro com persistência em `localStorage` e inicialização sem flicker (ver [src/styles/theme.jsx](src/styles/theme.jsx) e [src/styles/global.js](src/styles/global.js)).
@@ -114,5 +114,3 @@ Contribuições são bem-vindas! Agradeço desde já. Sinta-se à vontade para:
 2. **Crie** uma feature branch
 3. **Faça commit** das mudanças
 4. **Abra** um Pull Request
-
-

@@ -32,8 +32,11 @@ const Card = styled.div`
   border: 1px solid ${({ theme }) => theme.border};
   border-radius: 12px;
   padding: 16px;
+  /* largura original, sem max-width e margin centralizada */
   transition: transform 0.15s ease;
-  &:hover { transform: translateY(-1px); }
+  &:hover {
+    transform: translateY(-1px);
+  }
 `
 
 const Label = styled.label`
@@ -103,11 +106,14 @@ const Button = styled.button`
   border-radius: 8px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.1s ease;
-  &:hover { background: ${({ theme }) => theme.accentHover}; transform: translateY(-1px); }
+  transition:
+    background 0.2s ease,
+    transform 0.1s ease;
+  &:hover {
+    background: ${({ theme }) => theme.accentHover};
+    transform: translateY(-1px);
+  }
 `
-
-/* Removidos links duplicados: estão no Footer */
 
 export default function Contact() {
   const [name, setName] = useState('')
@@ -116,95 +122,77 @@ export default function Contact() {
   const [feedbackVisible, setFeedbackVisible] = useState(false)
   const [sending, setSending] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
-
-  const ContactFeedback = lazy(() => import('../components/ContactFeedback.jsx'))
-
+  // Esconde feedback automaticamente após 4s
   useEffect(() => {
-    if (!feedbackVisible) return
-    const t = setTimeout(() => setFeedbackVisible(false), 4000)
-    return () => clearTimeout(t)
+    if (feedbackVisible) {
+      const timer = setTimeout(() => setFeedbackVisible(false), 4000)
+      return () => clearTimeout(timer)
+    }
   }, [feedbackVisible])
-
-  const handleSubmit = async (e) => {
+  async function handleSubmit(e) {
     e.preventDefault()
-    setErrorMsg('')
     setSending(true)
+    setErrorMsg('')
+    setFeedbackVisible(false)
     try {
       await sendEmail({ name, email, message })
-      setFeedbackVisible(true)
       setName('')
       setEmail('')
       setMessage('')
+      setFeedbackVisible(true)
     } catch (_err) {
-      if (_err && _err.message === 'SEND_FAILED' && _err.data) {
-        if (_err.data.message && _err.data.message.includes('Activation')) {
-          setErrorMsg('Este formulário precisa ser ativado. Verifique seu e-mail e clique no link de ativação enviado pelo FormSubmit.');
-        } else {
-          setErrorMsg(`Falha ao enviar: ${_err.data.message || JSON.stringify(_err.data)}`);
-        }
-      } else {
-        setErrorMsg('Falha ao enviar. Tente novamente em instantes.');
-      }
+      setErrorMsg('Não foi possível enviar sua mensagem. Tente novamente mais tarde.')
+      setFeedbackVisible(true)
     } finally {
       setSending(false)
     }
   }
 
+  const ContactFeedback = lazy(() => import('../components/ContactFeedback.jsx'))
+
   return (
-    <Section className="fade-in">
+    <Section id="contato">
       <Title>Contato</Title>
+      <p>Fique à vontade para entrar em contato comigo através do formulário abaixo.</p>
       <Grid>
         <Card>
-          <form onSubmit={handleSubmit}>
-            <Label htmlFor="contact-name">Nome</Label>
+          <form onSubmit={handleSubmit} autoComplete="off">
+            <Label htmlFor="name">Nome</Label>
             <Input
-              id="contact-name"
-              placeholder="Por favor, digite seu nome"
-              name="name"
-              autoComplete="name"
+              id="name"
+              type="text"
               value={name}
               onChange={(e) => setName(e.target.value)}
               required
-              minLength={2}
-              onInvalid={(e) => e.target.setCustomValidity('Por favor, informe seu nome (mínimo 2 caracteres).')}
-              onInput={(e) => e.target.setCustomValidity('')}
+              placeholder="Seu nome"
+              autoComplete="name"
             />
-            <Label htmlFor="contact-email">Email</Label>
+            <Label htmlFor="email">Email</Label>
             <Input
-              id="contact-email"
-              placeholder="Por favor, digite seu email"
-              name="email"
+              id="email"
               type="email"
-              autoComplete="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              onInvalid={(e) => e.target.setCustomValidity('Informe um email válido.')}
-              onInput={(e) => e.target.setCustomValidity('')}
+              placeholder="seu@email.com"
+              autoComplete="email"
             />
-            <Label htmlFor="contact-message">Mensagem</Label>
+            <Label htmlFor="message">Mensagem</Label>
             <Textarea
-              id="contact-message"
-              placeholder="Por favor, digite o motivo do contato"
-              name="message"
-              autoComplete="on"
+              id="message"
               value={message}
               onChange={(e) => setMessage(e.target.value)}
               required
-              minLength={5}
-              onInvalid={(e) => e.target.setCustomValidity('Escreva sua mensagem (mínimo 5 caracteres).')}
-              onInput={(e) => e.target.setCustomValidity('')}
+              placeholder="Como posso ajudar?"
+              autoComplete="off"
             />
-            <Button type="submit" disabled={sending}>{sending ? 'Enviando…' : 'Enviar'}</Button>
-            {errorMsg && (
-              <div style={{ marginTop: 10, color: '#ef4444' }}>{errorMsg}</div>
-            )}
-            {feedbackVisible && (
-              <Suspense fallback={<div style={{ marginTop: 12 }}>Carregando confirmação…</div>}>
-                <ContactFeedback />
-              </Suspense>
-            )}
+            <Button type="submit" disabled={sending}>
+              {sending ? 'Enviando...' : 'Enviar'}
+            </Button>
           </form>
+          <Suspense fallback={null}>
+            {feedbackVisible && <ContactFeedback errorMsg={errorMsg} />}
+          </Suspense>
         </Card>
       </Grid>
     </Section>

@@ -6,7 +6,7 @@ import { ThemeProviderWithToggle } from '../styles/theme.jsx'
 function renderWithProviders(ui) {
   return render(
     <ThemeProviderWithToggle>
-      <MemoryRouter initialEntries={["/"]}>{ui}</MemoryRouter>
+      <MemoryRouter initialEntries={['/']}>{ui}</MemoryRouter>
     </ThemeProviderWithToggle>
   )
 }
