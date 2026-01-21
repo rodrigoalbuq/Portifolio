@@ -32,6 +32,15 @@ Portfólio moderno e responsivo em React + Vite, com rotas, tema claro/escuro, a
 - Node.js 18+
 
 ## Instalação e Execução
+## 🚀 Acesso via Deploy (Vercel)
+
+O portfólio está disponível online, hospedado gratuitamente pela Vercel. Para acessar a versão mais recente do sistema, basta clicar no link abaixo:
+
+👉 [Acessar Portfólio Online](https://portifolio-tan-one-73.vercel.app/)
+
+Você pode navegar por todas as seções, testar o formulário de contato e alternar entre os temas claro e escuro diretamente pelo navegador, sem necessidade de instalação local.
+
+Caso queira rodar localmente, siga as instruções abaixo:
 
 ```bash
 npm install
