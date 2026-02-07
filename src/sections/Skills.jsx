@@ -1,10 +1,11 @@
 // Parágrafo informativo com cor do tema (muted)
 const InfoText = styled.p`
   color: ${({ theme }) => theme.muted};
-`;
+`
 // Importa styled-components para estilização e useState para controle de seleção
 import styled from 'styled-components'
-import { useState } from 'react'
+import { useState, useContext } from 'react'
+import { LanguageContext } from '../components/Header.jsx'
 
 // Container principal da seção de habilidades
 const Section = styled.section`
@@ -60,56 +61,100 @@ const CatTitle = styled.h3`
   font-weight: 600;
 `
 
-// Componente principal de Skills
 export default function Skills() {
-  // Estado para controlar qual habilidade está selecionada
+  const { lang } = useContext(LanguageContext) || { lang: 'pt' }
+
   const [selected, setSelected] = useState('')
-  // Categorias e habilidades listadas
-  const categories = [
-    {
-      name: 'Linguagens',
-      items: ['JavaScript (ES6+)', 'TypeScript'],
-    },
-    {
-      name: 'Frameworks & Build',
-      items: ['React', 'Next.js', 'Vite', 'Node.js'],
-    },
-    {
-      name: 'Estilização',
-      items: [
-        'HTML5/CSS3',
-        'Sass',
-        'Styled Components',
-        'CSS Modules',
-        'Bootstrap',
-        'Tailwind CSS',
-        'CSS BEM',
-      ],
-    },
-    {
-      name: 'Ferramentas',
-      items: ['Git & GitHub', 'Deploy (Vercel)', 'Fetch', 'Axios'],
-    },
-    {
-      name: 'Conceitos',
-      items: [
-        'APIs REST',
-        'Responsive Design',
-        'Mobile First',
-        'Boas Práticas',
-        'PWA',
-        'AJAX',
-        'Design Patterns',
-        'SEO',
-      ],
-    },
-  ]
+  const categories =
+    lang === 'pt'
+      ? [
+          {
+            name: 'Linguagens',
+            items: ['JavaScript (ES6+)', 'TypeScript'],
+          },
+          {
+            name: 'Frameworks & Build',
+            items: ['React', 'Next.js', 'Vite', 'Node.js'],
+          },
+          {
+            name: 'Estilização',
+            items: [
+              'HTML5/CSS3',
+              'Sass',
+              'Styled Components',
+              'CSS Modules',
+              'Bootstrap',
+              'Tailwind CSS',
+              'CSS BEM',
+            ],
+          },
+          {
+            name: 'Ferramentas',
+            items: ['Git & GitHub', 'Deploy (Vercel)', 'Fetch', 'Axios'],
+          },
+          {
+            name: 'Conceitos',
+            items: [
+              'REST APIs',
+              'Design Responsivo',
+              'Mobile First',
+              'Boas Práticas',
+              'PWA',
+              'AJAX',
+              'Design Patterns',
+              'SEO',
+            ],
+          },
+        ]
+      : [
+          {
+            name: 'Languages',
+            items: ['JavaScript (ES6+)', 'TypeScript'],
+          },
+          {
+            name: 'Frameworks & Build',
+            items: ['React', 'Next.js', 'Vite', 'Node.js'],
+          },
+          {
+            name: 'Styling',
+            items: [
+              'HTML5/CSS3',
+              'Sass',
+              'Styled Components',
+              'CSS Modules',
+              'Bootstrap',
+              'Tailwind CSS',
+              'CSS BEM',
+            ],
+          },
+          {
+            name: 'Tools',
+            items: ['Git & GitHub', 'Deploy (Vercel)', 'Fetch', 'Axios'],
+          },
+          {
+            name: 'Concepts',
+            items: [
+              'REST APIs',
+              'Responsive Design',
+              'Mobile First',
+              'Best Practices',
+              'PWA',
+              'AJAX',
+              'Design Patterns',
+              'SEO',
+            ],
+          },
+        ]
 
   return (
     <Section className="fade-in">
-      <Title>Habilidades</Title>
+      <Title>{lang === 'pt' ? 'Habilidades' : 'Skills'}</Title>
       {/* Descrição introdutória */}
-      <InfoText>A seguir estão algumas das minhas principais habilidades técnicas. </InfoText>
+      <InfoText>
+        {lang === 'pt'
+          ? 'A seguir estão algumas das minhas principais habilidades técnicas.'
+          : 'Here are some of my main technical skills.'}
+      </InfoText>
       {/* Renderiza cada categoria de habilidades */}
       {categories.map((cat) => (
         <div key={cat.name}>
@@ -121,7 +166,7 @@ export default function Skills() {
                 key={s}
                 role="button"
                 tabIndex={0}
-                aria-label={`Selecionar habilidade: ${s}`}
+                aria-label={lang === 'pt' ? `Selecionar habilidade: ${s}` : `Select skill: ${s}`}
                 aria-pressed={selected === s}
                 $selected={selected === s}
                 // Alterna seleção ao clicar

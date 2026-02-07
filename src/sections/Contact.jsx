@@ -1,10 +1,109 @@
-// Parágrafo informativo com cor do tema (muted)
+import styled from 'styled-components'
+import { useState, useEffect, Suspense, useContext } from 'react'
+import { sendEmail } from '../services/email.js'
+import { LanguageContext } from '../components/Header.jsx'
+import { translations } from '../data/translations.js'
+import ContactFeedback from '../components/ContactFeedback.jsx'
 const InfoText = styled.p`
   color: ${({ theme }) => theme.muted};
-`;
-import styled from 'styled-components'
-import { useState, useEffect, Suspense, lazy } from 'react'
-import { sendEmail } from '../services/email.js'
+`
+
+export default function Contact() {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [message, setMessage] = useState('')
+  const [feedbackVisible, setFeedbackVisible] = useState(false)
+  const [sending, setSending] = useState(false)
+  const [errorMsg, setErrorMsg] = useState('')
+  const { lang } = useContext(LanguageContext) || { lang: 'pt' }
+  const t = translations[lang]
+  useEffect(() => {
+    if (feedbackVisible) {
+      const timer = setTimeout(() => setFeedbackVisible(false), 4000)
+      return () => clearTimeout(timer)
+    }
+  }, [feedbackVisible])
+  async function handleSubmit(e) {
+    e.preventDefault()
+    setSending(true)
+    setErrorMsg('')
+    setFeedbackVisible(false)
+    try {
+      await sendEmail({ name, email, message })
+      setName('')
+      setEmail('')
+      setMessage('')
+      setFeedbackVisible(true)
+    } catch (_err) {
+      setErrorMsg(
+        lang === 'pt'
+          ? 'Não foi possível enviar sua mensagem. Tente novamente mais tarde.'
+          : 'Could not send your message. Please try again later.'
+      )
+      setFeedbackVisible(true)
+    } finally {
+      setSending(false)
+    }
+  }
+
+  return (
+    <Section className="fade-in" id="contato">
+      <Title>{t.contact}</Title>
+      <InfoText>
+        {lang === 'pt'
+          ? 'Entre em contato para dúvidas, sugestões ou oportunidades.'
+          : 'Get in touch for questions, suggestions or opportunities.'}
+      </InfoText>
+      <Grid>
+        <Card>
+          <form onSubmit={handleSubmit} autoComplete="off">
+            <Label htmlFor="name">{lang === 'pt' ? 'Nome' : 'Name'}</Label>
+            <Input
+              id="name"
+              type="text"
+              value={name}
+              onChange={(e) => setName(e.target.value)}
+              required
+              placeholder={lang === 'pt' ? 'Seu nome' : 'Your name'}
+              autoComplete="name"
+            />
+            <Label htmlFor="email">{lang === 'pt' ? 'Email' : 'Email'}</Label>
+            <Input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              placeholder={lang === 'pt' ? 'seu@email.com' : 'your@email.com'}
+              autoComplete="email"
+            />
+            <Label htmlFor="message">{lang === 'pt' ? 'Mensagem' : 'Message'}</Label>
+            <Textarea
+              id="message"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+              required
+              placeholder={lang === 'pt' ? 'Como posso ajudar?' : 'How can I help?'}
+              autoComplete="off"
+            />
+            <Button type="submit" disabled={sending}>
+              {sending
+                ? lang === 'pt'
+                  ? 'Enviando...'
+                  : 'Sending...'
+                : lang === 'pt'
+                  ? 'Enviar'
+                  : 'Send'}
+            </Button>
+          </form>
+          <Suspense fallback={null}>
+            {feedbackVisible && <ContactFeedback errorMsg={errorMsg} lang={lang} />}
+          </Suspense>
+        </Card>
+      </Grid>
+    </Section>
+  )
+}
 
 const Section = styled.section`
   max-width: 1120px;
@@ -118,87 +217,3 @@ const Button = styled.button`
     transform: translateY(-1px);
   }
 `
-
-export default function Contact() {
-  const [name, setName] = useState('')
-  const [email, setEmail] = useState('')
-  const [message, setMessage] = useState('')
-  const [feedbackVisible, setFeedbackVisible] = useState(false)
-  const [sending, setSending] = useState(false)
-  const [errorMsg, setErrorMsg] = useState('')
-  // Esconde feedback automaticamente após 4s
-  useEffect(() => {
-    if (feedbackVisible) {
-      const timer = setTimeout(() => setFeedbackVisible(false), 4000)
-      return () => clearTimeout(timer)
-    }
-  }, [feedbackVisible])
-  async function handleSubmit(e) {
-    e.preventDefault()
-    setSending(true)
-    setErrorMsg('')
-    setFeedbackVisible(false)
-    try {
-      await sendEmail({ name, email, message })
-      setName('')
-      setEmail('')
-      setMessage('')
-      setFeedbackVisible(true)
-    } catch (_err) {
-      setErrorMsg('Não foi possível enviar sua mensagem. Tente novamente mais tarde.')
-      setFeedbackVisible(true)
-    } finally {
-      setSending(false)
-    }
-  }
-
-  const ContactFeedback = lazy(() => import('../components/ContactFeedback.jsx'))
-
-  return (
-    <Section id="contato">
-      <Title>Contato</Title>
-      <InfoText>Fique à vontade para entrar em contato comigo através do formulário abaixo.</InfoText>
-      <Grid>
-        <Card>
-          <form onSubmit={handleSubmit} autoComplete="off">
-            <Label htmlFor="name">Nome</Label>
-            <Input
-              id="name"
-              type="text"
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              required
-              placeholder="Seu nome"
-              autoComplete="name"
-            />
-            <Label htmlFor="email">Email</Label>
-            <Input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-              placeholder="seu@email.com"
-              autoComplete="email"
-            />
-            <Label htmlFor="message">Mensagem</Label>
-            <Textarea
-              id="message"
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
-              required
-              placeholder="Como posso ajudar?"
-              autoComplete="off"
-            />
-            <Button type="submit" disabled={sending}>
-              {sending ? 'Enviando...' : 'Enviar'}
-            </Button>
-          </form>
-          <Suspense fallback={null}>
-            {feedbackVisible && <ContactFeedback errorMsg={errorMsg} />}
-          </Suspense>
-        </Card>
-      </Grid>
-    </Section>
-  )
-}

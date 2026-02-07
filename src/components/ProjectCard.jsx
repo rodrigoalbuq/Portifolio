@@ -88,13 +88,13 @@ const A = styled.a`
   }
 `
 
-export default function ProjectCard({ project }) {
+export default function ProjectCard({ project, lang }) {
   return (
     <Card>
       <Cover src={project.image} alt={project.name} />
       <Body>
         <Title>{project.name}</Title>
-        <Desc>{project.description}</Desc>
+        <Desc>{lang === 'en' ? project.descriptionEn : project.descriptionPt}</Desc>
         <Tags>
           {project.techs.map((t) => (
             <Tag key={t}>{t}</Tag>
@@ -102,10 +102,10 @@ export default function ProjectCard({ project }) {
         </Tags>
         <Actions>
           <A href={project.demo} target="_blank" rel="noreferrer">
-            Demo
+            {lang === 'en' ? 'Demo' : 'Demo'}
           </A>
           <A href={project.repo} target="_blank" rel="noreferrer">
-            Código
+            {lang === 'en' ? 'Code' : 'Código'}
           </A>
         </Actions>
       </Body>

@@ -32,6 +32,7 @@ Portfólio moderno e responsivo em React + Vite, com rotas, tema claro/escuro, a
 - Node.js 18+
 
 ## Instalação e Execução
+
 ## 🚀 Acesso via Deploy (Vercel)
 
 O portfólio está disponível online, hospedado gratuitamente pela Vercel. Para acessar a versão mais recente do sistema, basta clicar no link abaixo:

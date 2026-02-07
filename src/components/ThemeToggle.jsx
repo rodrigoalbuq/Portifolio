@@ -1,6 +1,8 @@
 import styled, { keyframes } from 'styled-components'
 import { useState } from 'react'
 import { useThemeToggle } from '../styles/theme.jsx'
+import { useContext } from 'react'
+import { LanguageContext } from './Header.jsx'
 
 const Button = styled.button`
   position: relative;
@@ -92,6 +94,7 @@ export default function ThemeToggle() {
   const { themeName, toggleTheme } = useThemeToggle()
   const [animate, setAnimate] = useState(false)
   const [showRipple, setShowRipple] = useState(false)
+  const { lang } = useContext(LanguageContext) || { lang: 'pt' }
 
   const handleClick = () => {
     setAnimate(true)
@@ -101,7 +104,15 @@ export default function ThemeToggle() {
     setTimeout(() => setShowRipple(false), 420)
   }
 
-  const label = themeName === 'dark' ? 'Alternar para tema claro' : 'Alternar para tema escuro'
+  // Tradução do tooltip
+  const label =
+    lang === 'pt'
+      ? themeName === 'dark'
+        ? 'Alternar para tema claro'
+        : 'Alternar para tema escuro'
+      : themeName === 'dark'
+        ? 'Switch to light theme'
+        : 'Switch to dark theme'
 
   return (
     <Button onClick={handleClick} aria-label={label} title={label}>

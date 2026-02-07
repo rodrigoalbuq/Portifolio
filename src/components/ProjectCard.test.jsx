@@ -19,7 +19,8 @@ function renderWithTheme(ui) {
 
 const project = {
   name: 'Cinelista',
-  description: 'Aplicação para explorar filmes',
+  descriptionPt: 'Aplicação para explorar filmes, com busca, detalhes e lista personalizada.',
+  descriptionEn: 'App to explore movies, with search, details and personalized list.',
   techs: ['Next.js', 'React'],
   repo: 'https://github.com/rodrigoalbuq/nextjs-cinelista',
   demo: 'https://nextjs-cinelista-xi.vercel.app/',
@@ -27,9 +28,9 @@ const project = {
 }
 
 test('renderiza nome, descrição e links do projeto', () => {
-  renderWithTheme(<ProjectCard project={project} />)
+  renderWithTheme(<ProjectCard project={project} lang="pt" />)
   expect(screen.getByText('Cinelista')).toBeInTheDocument()
-  expect(screen.getByText(/Aplicação para explorar/)).toBeInTheDocument()
+  expect(screen.getByText(/Aplicação para explorar filmes/)).toBeInTheDocument()
   expect(screen.getByRole('link', { name: /Demo/i })).toHaveAttribute('href', project.demo)
   expect(screen.getByRole('link', { name: /Código/i })).toHaveAttribute('href', project.repo)
 })

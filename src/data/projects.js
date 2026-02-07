@@ -1,7 +1,8 @@
 export const projects = [
   {
     name: 'Cinelista',
-    description: 'Aplicação para explorar filmes, com busca, detalhes e lista personalizada.',
+    descriptionPt: 'Aplicação para explorar filmes, com busca, detalhes e lista personalizada.',
+    descriptionEn: 'App to explore movies, with search, details and personalized list.',
     techs: ['Next.js', 'React', 'TypeScript', 'CSS Modules', 'Axios', 'TMDb API', 'Vercel'],
     repo: 'https://github.com/rodrigoalbuq/nextjs-cinelista',
     demo: 'https://nextjs-cinelista-xi.vercel.app/',
@@ -9,8 +10,10 @@ export const projects = [
   },
   {
     name: 'Diário de Bordo',
-    description:
+    descriptionPt:
       'Aplicação web (PWA) simples para registrar entradas de um diário, com suporte a funcionamento offline e sincronização de dados.',
+    descriptionEn:
+      'Simple web app (PWA) to record diary entries, with offline support and data sync.',
     techs: [
       'HTML5',
       'CSS3',
@@ -27,8 +30,10 @@ export const projects = [
   },
   {
     name: 'Estilo Livre',
-    description:
+    descriptionPt:
       'Projeto de uma barbearia focado em estilos e design responsivo, explorando UI moderna.',
+    descriptionEn:
+      'Barbershop project focused on styles and responsive design, exploring modern UI.',
     techs: ['HTML5', 'CSS3', 'JavaScript', 'Bootstrap 5.3', 'Vercel'],
     repo: 'https://github.com/rodrigoalbuq/Estilo-Livre',
     demo: 'https://estilo-livre.vercel.app/',

@@ -9,10 +9,12 @@ const Wrap = styled.div`
   color: ${({ theme }) => theme.text};
 `
 
-export default function ContactFeedback() {
+export default function ContactFeedback({ lang }) {
   return (
     <Wrap role="status" aria-live="polite">
-      Obrigado! Entrarei em contato em breve.
+      {lang === 'en'
+        ? 'Thank you! I will contact you soon.'
+        : 'Obrigado! Entrarei em contato em breve.'}
     </Wrap>
   )
 }

@@ -2,8 +2,16 @@
 import { NavLink, useLocation, useNavigate } from 'react-router-dom'
 import styled, { keyframes } from 'styled-components'
 import ThemeToggle from './ThemeToggle.jsx'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState, useContext, createContext } from 'react'
+import { translations } from '../data/translations.js'
 
+// Contexto global de idioma
+export const LanguageContext = createContext()
+
+export function LanguageProvider({ children }) {
+  const [lang, setLang] = useState('pt')
+  return <LanguageContext.Provider value={{ lang, setLang }}>{children}</LanguageContext.Provider>
+}
 const Wrapper = styled.header`
   position: sticky;
   top: 0;
@@ -258,6 +266,8 @@ const Overlay = styled.div`
 `
 
 export default function Header() {
+  const { lang, setLang } = useContext(LanguageContext) || { lang: 'pt', setLang: () => {} }
+  const t = translations[lang]
   // Estado do menu mobile aberto/fechado
   const [open, setOpen] = useState(false)
   // Referência para o painel do menu mobile
@@ -329,13 +339,12 @@ export default function Header() {
     <Wrapper>
       <Container>
         {/* Botão da marca/voltar ao topo */}
-        <BrandButton type="button" onClick={goHomeTop} aria-label="Ir ao topo da About">
-          {/* Avatar só aparece no mobile se o menu não estiver aberto */}
+        <BrandButton type="button" onClick={goHomeTop} aria-label={t.goToTop}>
           <span style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
             <span style={{ display: 'inline-block' }}>
               <Avatar
                 src="/Rodrigo_portifolio.jpg"
-                alt="Rodrigo Albuquerque"
+                alt={t.name}
                 loading="eager"
                 decoding="async"
                 fetchPriority="high"
@@ -347,28 +356,64 @@ export default function Header() {
                 }}
               />
             </span>
-            Rodrigo Albuquerque
+            {t.name}
           </span>
         </BrandButton>
         {/* Navegação desktop */}
         <Nav>
           <Link to="/" data-spy-active={activeHash === '#sobre'}>
-            Sobre
+            {t.about}
           </Link>
           <Link to="/projetos" data-spy-active={activeHash === '#projetos'}>
-            Projetos
+            {t.projects}
           </Link>
           <Link to="/habilidades" data-spy-active={activeHash === '#habilidades'}>
-            Habilidades
+            {t.skills}
           </Link>
           <Link to="/contato" data-spy-active={activeHash === '#contato'}>
-            Contato
+            {t.contact}
           </Link>
           <ThemeToggle />
+          <button
+            style={{
+              marginLeft: 8,
+              padding: '6px 12px',
+              borderRadius: 8,
+              border: '1px solid #ccc',
+              background: '#fff',
+              cursor: 'pointer',
+              position: 'relative',
+            }}
+            onClick={() => setLang(lang === 'pt' ? 'en' : 'pt')}
+            aria-label={lang === 'pt' ? 'Switch to English' : 'Mudar para Português'}
+            onMouseEnter={(e) => {
+              const tooltip = document.createElement('div')
+              tooltip.innerText = lang === 'pt' ? 'Troca de idioma' : 'Switch language'
+              tooltip.style.position = 'absolute'
+              tooltip.style.top = 'calc(100% + 8px)'
+              tooltip.style.left = '50%'
+              tooltip.style.transform = 'translateX(-50%)'
+              tooltip.style.background = '#222'
+              tooltip.style.color = '#fff'
+              tooltip.style.padding = '4px 12px'
+              tooltip.style.borderRadius = '6px'
+              tooltip.style.fontSize = '13px'
+              tooltip.style.whiteSpace = 'nowrap'
+              tooltip.style.zIndex = '9999'
+              tooltip.className = 'lang-tooltip'
+              e.currentTarget.appendChild(tooltip)
+            }}
+            onMouseLeave={(e) => {
+              const tooltip = e.currentTarget.querySelector('.lang-tooltip')
+              if (tooltip) e.currentTarget.removeChild(tooltip)
+            }}
+          >
+            {lang === 'pt' ? 'EN' : 'PT'}
+          </button>
         </Nav>
         {/* Botão do menu mobile */}
         <MenuButton
-          aria-label={open ? 'Fechar menu' : 'Abrir menu'}
+          aria-label={open ? t.closeMenu : t.openMenu}
           aria-expanded={open}
           aria-controls="mobile-menu"
           onClick={toggle}
@@ -387,7 +432,7 @@ export default function Header() {
             id="mobile-menu"
             role="dialog"
             aria-modal="true"
-            aria-label="Menu"
+            aria-label={t.menu}
           >
             <div
               style={{
@@ -400,35 +445,72 @@ export default function Header() {
               <Brand>
                 <Avatar
                   src="/Rodrigo_portifolio.jpg"
-                  alt="Rodrigo Albuquerque"
+                  alt={t.name}
                   loading="eager"
                   decoding="async"
                   fetchPriority="high"
                 />
-                <span>Menu</span>
+                <span>{t.menu}</span>
               </Brand>
-              <ThemeToggle />
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <ThemeToggle />
+                <button
+                  style={{
+                    padding: '6px 12px',
+                    borderRadius: 8,
+                    border: '1px solid #ccc',
+                    background: '#fff',
+                    cursor: 'pointer',
+                    position: 'relative',
+                  }}
+                  onClick={() => setLang(lang === 'pt' ? 'en' : 'pt')}
+                  aria-label={lang === 'pt' ? 'Switch to English' : 'Mudar para Português'}
+                  onMouseEnter={(e) => {
+                    const tooltip = document.createElement('div')
+                    tooltip.innerText = lang === 'pt' ? 'Troca de idioma' : 'Switch language'
+                    tooltip.style.position = 'absolute'
+                    tooltip.style.top = 'calc(100% + 8px)'
+                    tooltip.style.left = '50%'
+                    tooltip.style.transform = 'translateX(-50%)'
+                    tooltip.style.background = '#222'
+                    tooltip.style.color = '#fff'
+                    tooltip.style.padding = '4px 12px'
+                    tooltip.style.borderRadius = '6px'
+                    tooltip.style.fontSize = '13px'
+                    tooltip.style.whiteSpace = 'nowrap'
+                    tooltip.style.zIndex = '9999'
+                    tooltip.className = 'lang-tooltip'
+                    e.currentTarget.appendChild(tooltip)
+                  }}
+                  onMouseLeave={(e) => {
+                    const tooltip = e.currentTarget.querySelector('.lang-tooltip')
+                    if (tooltip) e.currentTarget.removeChild(tooltip)
+                  }}
+                >
+                  {lang === 'pt' ? 'EN' : 'PT'}
+                </button>
+              </div>
             </div>
             <MobileList>
               <MobileLink to="/" data-spy-active={activeHash === '#sobre'} onClick={close}>
-                Sobre
+                {t.about}
               </MobileLink>
               <MobileLink
                 to="/projetos"
                 data-spy-active={activeHash === '#projetos'}
                 onClick={close}
               >
-                Projetos
+                {t.projects}
               </MobileLink>
               <MobileLink
                 to="/habilidades"
                 data-spy-active={activeHash === '#habilidades'}
                 onClick={close}
               >
-                Habilidades
+                {t.skills}
               </MobileLink>
               <MobileLink to="/contato" data-spy-active={activeHash === '#contato'} onClick={close}>
-                Contato
+                {t.contact}
               </MobileLink>
             </MobileList>
           </MobileNav>

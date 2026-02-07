@@ -1,6 +1,9 @@
 import styled from 'styled-components'
 import { FaWhatsapp } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
+import { useContext } from 'react'
+import { LanguageContext } from './Header.jsx'
+import { translations } from '../data/translations.js'
 
 const Wrapper = styled.footer`
   background: ${({ theme }) => theme.navBg};
@@ -45,11 +48,15 @@ const IconLink = styled.a`
 
 // Rodapé do site com links sociais e copyright
 export default function Footer() {
+  const { lang } = useContext(LanguageContext) || { lang: 'pt' }
+  const t = translations[lang]
   return (
     <Wrapper>
       <Container>
         {/* Copyright dinâmico */}
-        <span>© {new Date().getFullYear()} Rodrigo Albuquerque</span>
+        <span>
+          © {new Date().getFullYear()} {t.name}
+        </span>
         {/* Links sociais e de contato */}
         <Links>
           {/* GitHub */}
@@ -65,7 +72,12 @@ export default function Footer() {
             </svg>
           </IconLink>
           {/* Email interno */}
-          <IconLink as={Link} to="/contato" aria-label="Email" title="Email">
+          <IconLink
+            as={Link}
+            to="/contato"
+            aria-label={lang === 'pt' ? 'Email' : 'Email'}
+            title={lang === 'pt' ? 'Email' : 'Email'}
+          >
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -82,10 +94,22 @@ export default function Footer() {
             href="https://wa.me/5581994236672"
             target="_blank"
             rel="noreferrer"
-            aria-label="WhatsApp"
-            title="WhatsApp"
+            aria-label={lang === 'pt' ? 'WhatsApp' : 'WhatsApp'}
+            title={lang === 'pt' ? 'WhatsApp' : 'WhatsApp'}
           >
             <FaWhatsapp />
+          </IconLink>
+          {/* LinkedIn */}
+          <IconLink
+            href="https://www.linkedin.com/in/rodrigoalvalbq/"
+            target="_blank"
+            rel="noreferrer"
+            aria-label="LinkedIn"
+            title="LinkedIn"
+          >
+            <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+              <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11.75 20h-2.5v-10h2.5v10zm-1.25-11.25c-.83 0-1.5-.67-1.5-1.5s.67-1.5 1.5-1.5 1.5.67 1.5 1.5-.67 1.5-1.5 1.5zm13 11.25h-2.5v-5.5c0-1.1-.9-2-2-2s-2 .9-2 2v5.5h-2.5v-10h2.5v1.25c.41-.77 1.23-1.25 2.25-1.25 1.66 0 3 1.34 3 3v7z" />
+            </svg>
           </IconLink>
         </Links>
       </Container>

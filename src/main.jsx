@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App.jsx'
+import { LanguageProvider } from './components/Header.jsx'
 import GlobalStyle from './styles/global.js'
 import { ThemeProviderWithToggle } from './styles/theme.jsx'
 
@@ -15,7 +16,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         {/* Estilos globais */}
         <GlobalStyle />
         {/* Componente principal da aplicação */}
-        <App />
+        <LanguageProvider>
+          <App />
+        </LanguageProvider>
       </BrowserRouter>
     </ThemeProviderWithToggle>
   </React.StrictMode>

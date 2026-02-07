@@ -5,6 +5,9 @@ import Projects from './Projects.jsx'
 import Skills from './Skills.jsx'
 import Contact from './Contact.jsx'
 import Reveal from '../components/Reveal.jsx'
+import { useContext } from 'react'
+import { LanguageContext } from '../components/Header.jsx'
+import { translations } from '../data/translations.js'
 
 // Animação de sublinhado
 const underlineGrow = keyframes`
@@ -148,6 +151,8 @@ const A = styled.a`
 `
 
 export default function About() {
+  const { lang } = useContext(LanguageContext) || { lang: 'pt' }
+  const t = translations[lang]
   const isMobile =
     typeof window !== 'undefined' && typeof window.matchMedia === 'function'
       ? window.matchMedia('(max-width: 640px)').matches
@@ -158,19 +163,21 @@ export default function About() {
       <AboutCard>
         <Hero>
           <PhotoWrap>
-            <Photo src="/Rodrigo_portifolio.jpg" alt="Rodrigo Albuquerque" />
+            <Photo src="/Rodrigo_portifolio.jpg" alt={t.name} />
           </PhotoWrap>
           <div>
             <Reveal delayMs={120} threshold={0.15}>
-              <Title>Olá, meu nome é Rodrigo Albuquerque</Title>
+              <Title>
+                {lang === 'pt'
+                  ? 'Olá, meu nome é Rodrigo Albuquerque'
+                  : 'Hello, my name is Rodrigo Albuquerque'}
+              </Title>
             </Reveal>
             <Reveal delayMs={220} threshold={0.15}>
               <Bio>
-                Possuo bacharelado em Ciência da Computação e atuo como desenvolvedor Front-end Júnior, focado em criar interfaces simples, modernas e
-                responsivas. Estou em constante aprendizado e busco evoluir minhas habilidades
-                transformando ideias em experiências digitais funcionais e agradáveis. Tenho atenção
-                aos detalhes, gosto de boas práticas e estou sempre aberto a novos desafios e
-                tecnologias.
+                {lang === 'pt'
+                  ? 'Possuo bacharelado em Ciência da Computação e atuo como desenvolvedor Front-end Júnior, focado em criar interfaces simples, modernas e responsivas. Estou em constante aprendizado e busco evoluir minhas habilidades transformando ideias em experiências digitais funcionais e agradáveis. Tenho atenção aos detalhes, gosto de boas práticas e estou sempre aberto a novos desafios e tecnologias.'
+                  : 'I have a bachelor’s degree in Computer Science and work as a Junior Front-end Developer, focused on creating simple, modern, and responsive interfaces. I am constantly learning and seek to improve my skills by turning ideas into functional and pleasant digital experiences. I pay attention to details, enjoy best practices, and am always open to new challenges and technologies.'}
               </Bio>
             </Reveal>
             <Reveal delayMs={320} threshold={0.15}>
@@ -186,10 +193,17 @@ export default function About() {
                     transition: 'color 0.2s ease',
                   }}
                 >
-                  <A as="span">Email</A>
+                  <A as="span">{lang === 'pt' ? 'Email' : 'Email'}</A>
                 </Link>
                 <A href="https://wa.me/5581994236672" target="_blank" rel="noreferrer">
-                  WhatsApp{' '}
+                  {lang === 'pt' ? 'WhatsApp' : 'WhatsApp'}{' '}
+                </A>
+                <A
+                  href="https://www.linkedin.com/in/rodrigoalvalbq/"
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  LinkedIn
                 </A>
               </Contacts>
             </Reveal>
