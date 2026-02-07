@@ -20,11 +20,24 @@ const Container = styled.div`
   justify-content: space-between;
   flex-wrap: wrap;
   gap: 12px;
+  @media (max-width: 600px) {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0;
+  }
 `
 
 const Links = styled.div`
   display: flex;
   gap: 16px;
+  @media (max-width: 600px) {
+    margin-top: 18px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
 `
 
 const IconLink = styled.a`
@@ -53,12 +66,11 @@ export default function Footer() {
   return (
     <Wrapper>
       <Container>
-        {/* Copyright dinâmico */}
-        <span>
+        {/* Desktop: nome e ano à esquerda, ícones à direita */}
+        <span className="footer-copy">
           © {new Date().getFullYear()} {t.name}
         </span>
-        {/* Links sociais e de contato */}
-        <Links>
+        <Links className="footer-links">
           {/* GitHub */}
           <IconLink
             href="https://github.com/rodrigoalbuq"
@@ -113,6 +125,25 @@ export default function Footer() {
           </IconLink>
         </Links>
       </Container>
+      {/* Mobile: nome e ano centralizados, ícones abaixo */}
+      <style>{`
+        @media (max-width: 600px) {
+          .footer-copy {
+            width: 100%;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 0;
+          }
+          .footer-links {
+            margin-top: 18px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            width: 100%;
+          }
+        }
+      `}</style>
     </Wrapper>
   )
 }
