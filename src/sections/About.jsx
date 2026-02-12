@@ -80,6 +80,11 @@ const Hero = styled.div`
   grid-template-columns: 120px 1fr;
   gap: 20px;
   align-items: center;
+  @media (max-width: 700px) {
+    grid-template-columns: 1fr;
+    justify-items: start;
+    text-align: left;
+  }
 `
 
 const PhotoWrap = styled.div`
@@ -87,6 +92,12 @@ const PhotoWrap = styled.div`
   display: inline-block;
   animation: ${floatY} 6s ease-in-out infinite alternate;
   margin-left: -8px;
+  @media (max-width: 700px) {
+    display: flex;
+    justify-content: center;
+    margin-left: 0;
+    width: 100%;
+  }
 `
 
 const Photo = styled.img`
@@ -132,6 +143,9 @@ const Bio = styled.p`
   color: ${({ theme }) => theme.muted};
   line-height: 1.7;
   animation: ${revealUp} 360ms ease 140ms both;
+  @media (max-width: 700px) {
+    text-align: left;
+  }
 `
 
 const Contacts = styled.div`
@@ -139,6 +153,11 @@ const Contacts = styled.div`
   gap: 16px;
   margin-top: 16px;
   animation: ${revealUp} 380ms ease 180ms both;
+  @media (max-width: 700px) {
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    width: 100%;
+  }
 `
 
 const A = styled.a`
