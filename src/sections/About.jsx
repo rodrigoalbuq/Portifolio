@@ -265,6 +265,10 @@ export default function About() {
   const [typedIntro, setTypedIntro] = useState('')
   const [introComplete, setIntroComplete] = useState(false)
   const [contentVisible, setContentVisible] = useState(false)
+  const isSmallScreen =
+    typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+      ? window.matchMedia('(max-width: 768px)').matches
+      : false
 
   useEffect(() => {
     let position = 0
@@ -350,13 +354,13 @@ export default function About() {
 
         {contentVisible && (
           <>
-            <Reveal id="projetos" delayMs={120} threshold={0.45} focus>
+            <Reveal id="projetos" delayMs={120} threshold={0.45} focus={!isSmallScreen}>
               <Projects />
             </Reveal>
-            <Reveal id="habilidades" delayMs={180} threshold={0.45} focus>
+            <Reveal id="habilidades" delayMs={180} threshold={0.45} focus={!isSmallScreen}>
               <Skills />
             </Reveal>
-            <Reveal id="contato" delayMs={240} threshold={0.45} focus>
+            <Reveal id="contato" delayMs={240} threshold={0.45} focus={!isSmallScreen}>
               <Contact />
             </Reveal>
           </>
