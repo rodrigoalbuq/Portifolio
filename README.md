@@ -1,17 +1,21 @@
-# Portfólio | Rodrigo Albuquerque — [Site](https://portifolio-tan-one-73.vercel.app/)
+# Portfólio | Rodrigo Albuquerque
 
-Portfólio moderno e responsivo em React + Vite, com rotas, tema claro/escuro, animações suaves e formulário de contato.
+Portfólio pessoal responsivo construído com React, Vite e Styled Components. A interface reúne apresentação profissional, projetos, habilidades técnicas e formulário de contato em uma experiência minimalista com animações progressivas.
 
-## 🖼️ Captura de Tela
+**Site:** [portifolio-tan-one-73.vercel.app](https://portifolio-tan-one-73.vercel.app/)
 
-![Portifolio em execução](Screenshot/Portifolio_1801.png)
+## Recursos
 
-## Visão Geral
-
-- Rotas: `/` (Sobre), `/projetos`, `/habilidades`, `/contato`
-- Tema: persistência no `localStorage` e animação sem flicker
-- Contato: formulário via EmailJS com fallback automático para FormSubmit
-- Acessibilidade: navegação por teclado, focos visíveis, roles adequados
+- Header minimalista com menu sanduíche, marca centralizada e alternância de tema.
+- Menu em tela cheia com fundo desfocado, navegação para as seções e fechamento por botão, overlay ou link.
+- Animação de escrita progressiva no título principal: `Olá, eu sou o Rodrigo Albuquerque`.
+- Revelação gradual do restante do conteúdo com opacidade, movimento e blur.
+- Foto de perfil circular com contorno luminoso animado.
+- Habilidades apresentadas com ícones, nomes e categorias responsivas.
+- Cards de projetos com ações `Demo` e `Código` reveladas no hover ou foco.
+- Tema claro/escuro persistido no `localStorage`.
+- Formulário de contato com EmailJS e fallback para FormSubmit.
+- Navegação por teclado, foco visível e atributos ARIA.
 
 ## Projetos Apresentados
 
@@ -33,26 +37,26 @@ Portfólio moderno e responsivo em React + Vite, com rotas, tema claro/escuro, a
 
 ## Instalação e Execução
 
-## 🚀 Acesso via Deploy (Vercel)
-
-O portfólio está disponível online, hospedado gratuitamente pela Vercel. Para acessar a versão mais recente do sistema, basta clicar no link abaixo:
-
-👉 [Acessar Portfólio Online](https://portifolio-tan-one-73.vercel.app/)
-
-Você pode navegar por todas as seções, testar o formulário de contato e alternar entre os temas claro e escuro diretamente pelo navegador, sem necessidade de instalação local.
-
-Caso queira rodar localmente, siga as instruções abaixo:
-
 ```bash
 npm install
 npm run dev
 ```
 
+O servidor de desenvolvimento é iniciado pelo Vite. Para abrir uma versão de produção localmente:
+
+```bash
+npm run build
+npm run preview
+```
+
 Scripts úteis:
 
 ```bash
-# testes
+# testes em modo watch
 npm run test
+
+# execução única da suíte
+npm test -- --run
 
 # testes com UI
 npm run test:ui
@@ -93,10 +97,15 @@ VITE_FALLBACK_RECIPIENT=seu_email@exemplo.com
 - `src/styles`: estilos globais e tema
 - `Screenshot/`: pasta pública (configurada em `publicDir` no Vite)
 
-## Notas
+## Navegação e Estrutura
 
-- Para evitar “flash” de tema, o app inicializa com o valor do `localStorage` ou `prefers-color-scheme` antes da montagem.
-- O conteúdo da About revela conforme o scroll usando `IntersectionObserver`.
+A página inicial reúne as seções `sobre`, `projetos`, `habilidades` e `contato`. As rotas adicionais disponíveis são:
+
+- `/projetos`
+- `/habilidades`
+- `/contato`
+
+O `Header` usa `IntersectionObserver` para acompanhar a seção ativa, enquanto o componente `Reveal` controla as entradas e saídas graduais durante a rolagem.
 
 ## Qualidade de Código
 
@@ -113,7 +122,7 @@ Tecnologias que pratiquei durante o desenvolvimento deste projeto do meu portfó
 - Acessibilidade: uso de `role`, `aria-*`, foco visível e overlay com `role="presentation"` para o drawer mobile; testes garantem acessibilidade básica.
 - Testes com Vitest + Testing Library: suíte cobrindo navegação, componentes e setup com polyfills (ver [vitest.setup.js](vitest.setup.js)).
 - Envio de emails: integração com EmailJS via variáveis `.env` e fallback para FormSubmit (ver [src/services/email.js](src/services/email.js)).
-- UX/Performance: Vite para desenvolvimento rápido, animações sutis e `lazy()` para carregar componentes sob demanda (ver uso em [src/sections/Contact.jsx](src/sections/Contact.jsx)).
+- UX/Performance: Vite para desenvolvimento rápido, animações sutis e carregamento progressivo do conteúdo.
 - Conceitos: reforço de princípios como Responsive Design, Mobile First, APIs REST, AJAX e PWA (documentados em Habilidades).
 
 ## 🤝 Contribuições

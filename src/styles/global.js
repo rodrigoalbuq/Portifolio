@@ -16,7 +16,6 @@ const GlobalStyle = createGlobalStyle`
     line-height: 1.6;
     background: ${({ theme }) => theme.bg};
     color: ${({ theme }) => theme.text};
-    /* Evitar flash ao carregar: transições só após app montar */
     transition: none;
   }
 
@@ -24,16 +23,31 @@ const GlobalStyle = createGlobalStyle`
     transition: background 0.25s ease, color 0.25s ease;
   }
 
-  ::selection { background: ${({ theme }) => theme.accent}; color: #000; }
+  body.menu-open main,
+  body.menu-open footer {
+    filter: blur(14px);
+    transition: filter 1200ms cubic-bezier(0.22, 1, 0.36, 1);
+    pointer-events: none;
+  }
 
-  /* Seções ancoradas respeitam header fixo */
+  body main,
+  body footer {
+    filter: blur(0);
+    transition: filter 1200ms cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  ::selection { background: ${({ theme }) => theme.accent}; color: #fff; }
+
   section[id] { scroll-margin-top: 84px; }
+  :focus-visible {
+    outline: 2px solid ${({ theme }) => theme.accent};
+    outline-offset: 2px;
+    border-radius: 6px;
+  }
 
-  /* Acessibilidade: foco visível padrão */
-  :focus-visible { outline: 2px solid ${({ theme }) => theme.accent}; outline-offset: 2px; border-radius: 6px; }
+  a { color: inherit; }
+  img { max-width: 100%; display: block; }
 
-
-  /* Utilitário: animação sutil de entrada */
   .fade-in {
     animation: ${fadeIn} 320ms ease both;
   }

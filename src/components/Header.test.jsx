@@ -18,6 +18,12 @@ test('abre e fecha o menu mobile (drawer)', () => {
   fireEvent.click(menuBtn)
   expect(screen.getByRole('dialog', { name: /menu/i })).toBeInTheDocument()
 
+  fireEvent.click(menuBtn)
+  expect(screen.queryByRole('dialog', { name: /menu/i })).not.toBeInTheDocument()
+
+  fireEvent.click(menuBtn)
+  expect(screen.getByRole('dialog', { name: /menu/i })).toBeInTheDocument()
+
   const overlay = screen.getByRole('presentation')
   fireEvent.click(overlay)
   expect(screen.queryByRole('dialog', { name: /menu/i })).not.toBeInTheDocument()

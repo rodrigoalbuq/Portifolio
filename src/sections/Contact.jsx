@@ -4,8 +4,13 @@ import { sendEmail } from '../services/email.js'
 import { LanguageContext } from '../components/Header.jsx'
 import { translations } from '../data/translations.js'
 import ContactFeedback from '../components/ContactFeedback.jsx'
+
 const InfoText = styled.p`
   color: ${({ theme }) => theme.muted};
+  margin: 0 0 24px;
+  max-width: 620px;
+  line-height: 1.7;
+  text-align: center;
 `
 
 export default function Contact() {
@@ -17,12 +22,14 @@ export default function Contact() {
   const [errorMsg, setErrorMsg] = useState('')
   const { lang } = useContext(LanguageContext) || { lang: 'pt' }
   const t = translations[lang]
+
   useEffect(() => {
     if (feedbackVisible) {
       const timer = setTimeout(() => setFeedbackVisible(false), 4000)
       return () => clearTimeout(timer)
     }
   }, [feedbackVisible])
+
   async function handleSubmit(e) {
     e.preventDefault()
     setSending(true)
@@ -106,20 +113,21 @@ export default function Contact() {
 }
 
 const Section = styled.section`
-  max-width: 1120px;
+  max-width: 1280px;
   margin: 0 auto;
-  padding: 24px;
+  padding: 112px 24px 48px;
   color: ${({ theme }) => theme.text};
-  min-height: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  text-align: center;
 `
 
 const Title = styled.h2`
   margin: 0 0 12px 0;
+  font-size: clamp(2.1rem, 3vw, 3.4rem);
+  letter-spacing: -0.06em;
+  font-weight: 700;
+  text-align: center;
 `
 
 const Grid = styled.div`
@@ -127,93 +135,77 @@ const Grid = styled.div`
   grid-template-columns: 1fr;
   gap: 20px;
   width: 100%;
-  max-width: 640px;
+  max-width: 720px;
+  justify-items: center;
 `
 
 const Card = styled.div`
-  background: ${({ theme }) => theme.surface};
+  background: rgba(255,255,255,0.06);
   border: 1px solid ${({ theme }) => theme.border};
-  border-radius: 12px;
-  padding: 16px;
-  /* largura original, sem max-width e margin centralizada */
-  transition: transform 0.15s ease;
+  border-radius: 8px;
+  padding: 28px;
+  width: 100%;
+  transition: transform 0.15s ease, border-color 0.2s ease;
   &:hover {
+    border-color: ${({ theme }) => theme.accent};
     transform: translateY(-1px);
   }
 `
 
 const Label = styled.label`
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   color: ${({ theme }) => theme.muted};
+  font-weight: 600;
 `
 
 const Input = styled.input`
   width: 100%;
-  padding: 10px 12px;
-  border-radius: 8px;
+  padding: 12px 14px;
+  border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.border};
-  background: ${({ theme }) => theme.navBg};
+  background: rgba(15, 23, 42, 0.03);
   color: ${({ theme }) => theme.text};
-  margin-bottom: 12px;
-  &:invalid {
-    border-color: ${({ theme }) => theme.error};
-  }
-  &:focus:invalid {
+  margin-bottom: 14px;
+  &:focus {
     outline: none;
-    border-color: ${({ theme }) => theme.error};
-    box-shadow: 0 0 0 3px ${({ theme }) => `${theme.error}40`};
-  }
-  &:valid {
-    border-color: ${({ theme }) => theme.valid};
-  }
-  &:focus:valid {
-    outline: none;
-    border-color: ${({ theme }) => theme.valid};
-    box-shadow: 0 0 0 3px ${({ theme }) => `${theme.valid}40`};
+    border-color: ${({ theme }) => theme.accent};
+    box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08);
   }
 `
 
 const Textarea = styled.textarea`
   width: 100%;
-  padding: 10px 12px;
-  border-radius: 8px;
+  padding: 12px 14px;
+  border-radius: 5px;
   border: 1px solid ${({ theme }) => theme.border};
-  background: ${({ theme }) => theme.navBg};
+  background: rgba(15, 23, 42, 0.03);
   color: ${({ theme }) => theme.text};
-  margin-bottom: 12px;
-  min-height: 120px;
-  &:invalid {
-    border-color: ${({ theme }) => theme.error};
-  }
-  &:focus:invalid {
+  margin-bottom: 14px;
+  min-height: 140px;
+  resize: vertical;
+  &:focus {
     outline: none;
-    border-color: ${({ theme }) => theme.error};
-    box-shadow: 0 0 0 3px ${({ theme }) => `${theme.error}40`};
-  }
-  &:valid {
-    border-color: ${({ theme }) => theme.valid};
-  }
-  &:focus:valid {
-    outline: none;
-    border-color: ${({ theme }) => theme.valid};
-    box-shadow: 0 0 0 3px ${({ theme }) => `${theme.valid}40`};
+    border-color: ${({ theme }) => theme.accent};
+    box-shadow: 0 0 0 3px rgba(15, 23, 42, 0.08);
   }
 `
 
 const Button = styled.button`
   background: ${({ theme }) => theme.accent};
-  color: ${({ theme }) => theme.bg};
-  padding: 10px 14px;
+  color: #fff;
+  padding: 12px 18px;
   border: 0;
-  border-radius: 8px;
-  font-weight: 600;
+  border-radius: 5px;
+  font-weight: 700;
   cursor: pointer;
-  transition:
-    background 0.2s ease,
-    transform 0.1s ease;
+  transition: transform 0.2s ease, opacity 0.2s ease;
   &:hover {
-    background: ${({ theme }) => theme.accentHover};
     transform: translateY(-1px);
+    opacity: 0.96;
+  }
+  &:disabled {
+    cursor: wait;
+    opacity: 0.65;
   }
 `

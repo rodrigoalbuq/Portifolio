@@ -8,21 +8,17 @@ const Button = styled.button`
   position: relative;
   overflow: hidden;
   border: none;
-  background: ${({ theme }) => theme.surface};
+  background: transparent;
   color: ${({ theme }) => theme.text};
   padding: 8px;
   border-radius: 10px;
-
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  transition:
-    background 0.2s ease,
-    color 0.2s ease,
-    border-color 0.2s ease;
+  transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
   &:hover {
-    background: ${({ theme }) => theme.navHoverBg};
+    transform: translateY(-1px);
   }
 `
 
